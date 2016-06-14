@@ -3,10 +3,10 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME		=> 'WWW::Scraper::FindaGrave',
+    NAME		=> 'WWW::Scrape::FindaGrave',
     AUTHOR		=> q{Nigel Horne <njh@bandsman.co.uk>},
-    VERSION_FROM	=> 'lib/WWW/Scraper/FindaGrave.pm',
-    ABSTRACT_FROM       => 'lib/WWW/Scraper/FindaGrave.pm',
+    VERSION_FROM	=> 'lib/WWW/Scrape/FindaGrave.pm',
+    ABSTRACT_FROM       => 'lib/WWW/Scrape/FindaGrave.pm',
     ((defined($ExtUtils::MakeMaker::VERSION) &&
      ($ExtUtils::MakeMaker::VERSION >= 6.3002))
       ? ('LICENSE'=> 'GPL')
@@ -23,14 +23,14 @@ WriteMakefile(
 	'HTML::SimpleLinkExtor' => 0,
     },
     dist		=> { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean		=> { FILES => 'WWW-Scraper-FindaGrave-*' },
+    clean		=> { FILES => 'WWW-Scrape-FindaGrave-*' },
     META_MERGE		=> {
     	'meta-spec' => { version => 2 },
     	resources => {
     		repository => {
 			type => 'git',
-			url => 'git://github.com/nigelhorne/WWW-Scraper-FindaGrave.git',
-			web => 'https://github.com/nigelhorne/WWW-Scraper-FindaGrave',
+			url => 'git://github.com/nigelhorne/WWW-Scrape-FindaGrave.git',
+			web => 'https://github.com/nigelhorne/WWW-Scrape-FindaGrave',
     		},
 	},
     },

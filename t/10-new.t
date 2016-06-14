@@ -4,7 +4,7 @@ use strict;
 
 use Test::Most tests => 2;
 
-use WWW::Scraper::FindaGrave;
+use WWW::Scrape::FindaGrave;
 
-isa_ok(WWW::Scraper::FindaGrave->new(), 'WWW::Scraper::FindaGrave', 'Creating WWW::Scraper::FindaGrave object');
-ok(!defined(WWW::Scraper::FindaGrave::new()));
+isa_ok(WWW::Scrape::FindaGrave->new(), 'WWW::Scrape::FindaGrave', 'Creating WWW::Scrape::FindaGrave object');
+ok(!defined(WWW::Scrape::FindaGrave::new()));

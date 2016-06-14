@@ -1,4 +1,4 @@
-package WWW::Scraper::FindaGrave;
+package WWW::Scrape::FindaGrave;
 
 use warnings;
 use strict;
@@ -8,7 +8,7 @@ use HTML::SimpleLinkExtor;
 
 =head1 NAME
 
-WWW::Scraper::FindaGrave - Scrape the FindaGrave site
+WWW::Scrape::FindaGrave - Scrape the FindaGrave site
 
 =head1 VERSION
 
@@ -21,12 +21,12 @@ our $VERSION = '0.01';
 =head1 SYNOPSIS
 
     use HTTP::Cache::Transparent;  # be nice
-    use WWW::Scaper::FindaGrave;
+    use WWW::Scape::FindaGrave;
 
     HTTP::Cache::Transparent::init({
     	BasePath => '/var/cache/findagrave'
     });
-    my $f = WWW::Scraper::FindaGrave->new({
+    my $f = WWW::Scrape::FindaGrave->new({
     	firstname => 'John',
     	lastname => 'Smith',
     	country => 'England',
@@ -196,9 +196,9 @@ Nigel Horne, C<< <njh at bandsman.co.uk> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-www-scraper-findagrave at rt.cpan.org>,
+Please report any bugs or feature requests to C<bug-www-scrape-findagrave at rt.cpan.org>,
 or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scaper-FindaGrave>.
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scape-FindaGrave>.
 I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
@@ -210,7 +210,7 @@ L<http://https://github.com/nigelhorne/gedgrave>
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::Scaper::FindaGrave
+    perldoc WWW::Scape::FindaGrave
 
 
 You can also look for information at:
@@ -219,19 +219,19 @@ You can also look for information at:
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scaper-FindaGrave>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scape-FindaGrave>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/WWW-Scaper-FindaGrave>
+L<http://annocpan.org/dist/WWW-Scape-FindaGrave>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/WWW-Scaper-FindaGrave>
+L<http://cpanratings.perl.org/d/WWW-Scape-FindaGrave>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/WWW-Scaper-FindaGrave/>
+L<http://search.cpan.org/dist/WWW-Scape-FindaGrave/>
 
 =back
 
@@ -245,4 +245,4 @@ This program is released under the following licence: GPL
 
 =cut
 
-1; # End of WWW::Scaper::FindaGrave
+1; # End of WWW::Scape::FindaGrave

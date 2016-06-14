@@ -1,5 +1,5 @@
 ./Changes
-./lib/WWW/Scraper/FindaGrave.pm
+./lib/WWW/Scrape/FindaGrave.pm
 ./LICENCE
 ./Makefile.PL
 ./MANIFEST
