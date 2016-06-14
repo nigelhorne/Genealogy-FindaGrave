@@ -8,7 +8,7 @@ use HTML::SimpleLinkExtor;
 
 =head1 NAME
 
-WWW::Scraper::FindaGrave - Scape the FindaGrave site
+WWW::Scraper::FindaGrave - Scrape the FindaGrave site
 
 =head1 VERSION
 
@@ -204,7 +204,7 @@ automatically be notified of progress on your bug as I make changes.
 
 =head1 SEE ALSO
 
-L<HTTP::BrowserDetect>
+L<http://https://github.com/nigelhorne/gedgrave>
 
 =head1 SUPPORT
 
