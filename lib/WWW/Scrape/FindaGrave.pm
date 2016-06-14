@@ -30,7 +30,7 @@ our $VERSION = '0.01';
     	firstname => 'John',
     	lastname => 'Smith',
     	country => 'England',
-    	dod => 1862
+    	date_of_death => 1862
     });
 
     while(my $url = $f->get_next_entry()) {
@@ -42,6 +42,14 @@ our $VERSION = '0.01';
 
 =head2 new
 
+Creates a WWW::Scrape::FindaGrave object.
+
+It takes two manadatory arguments firstname and lastname.
+
+Also one of either date_of_birth and date_of_death must be given
+
+There are two optional arguments: middlename and mech.  Mech is a pointer
+to an object such as L<WWW::Mechanize>.  If not given it will be created.
 =cut
 
 sub new {
@@ -52,10 +60,15 @@ sub new {
 
 	my %args = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
 
+	die "First name is not optional" unless($args{'firstname'});
+	die "Last name is not optional" unless($args{'lastname'});
+	die "You must give one of the date of birth or death"
+		unless($args{'date_of_death'} || $args{'date_of_birth'});
+
 	my $rc = {
 		mech => $args{'mech'} || WWW::Mechanize::GZip->new(),
-		dob => $args{'dob'},
-		dod => $args{'dod'},
+		date_of_birth => $args{'date_of_birth'},
+		date_of_death => $args{'date_of_death'},
 		country => $args{'country'},
 		firstname => $args{'firstname'},
 		middlename => $args{'middlename'},
@@ -74,11 +87,11 @@ sub new {
 		GSpartial => 0,
 	);
 
-	if($rc->{dod}) {
-		$fields{GSdy} = $rc->{dod};
+	if($rc->{date_of_death}) {
+		$fields{GSdy} = $rc->{date_of_death};
 		$fields{GSdyrel} = 'in';
-	} elsif($rc->{'dob'}) {
-		$fields{GSby} = $rc->{dob};
+	} elsif($rc->{'date_of_birth'}) {
+		$fields{GSby} = $rc->{date_of_birth};
 		$fields{GSbyrel} = 'in';
 	}
 
@@ -90,8 +103,8 @@ sub new {
 	# doesn't, findagrave will miss the match. Of course, the downside
 	# of not doing this is that you will get false positives.  It's really
 	# a problem with findagrave.
-	# if($dob) {
-		# $fields{GSby} = $dob;
+	# if($date_of_birth) {
+		# $fields{GSby} = $date_of_birth;
 		# $fields{GSbyrel} = 'in';
 	# }
 
@@ -137,6 +150,8 @@ sub new {
 
 =head2 get_next_entry
 
+Returns the next match as a URL to the Find-A-Grave page.
+
 =cut
 
 sub get_next_entry
@@ -152,8 +167,8 @@ sub get_next_entry
 
 	my $firstname = $self->{'firstname'};
 	my $lastname = $self->{'lastname'};
-	my $dod = $self->{'dod'};
-	my $dob = $self->{'dob'};
+	my $date_of_death = $self->{'date_of_death'};
+	my $date_of_birth = $self->{'date_of_birth'};
 
 	my $base = $self->{'resp'}->base();
 	my $e = HTML::SimpleLinkExtor->new($base);
@@ -162,12 +177,12 @@ sub get_next_entry
 
 	foreach my $link ($e->links) {
 		my $match = 0;
-		if($dod) {
-			if($link =~ /www.findagrave.com\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSdy=\Q$dod\E.*&GRid=\d+/i) {
+		if($date_of_death) {
+			if($link =~ /www.findagrave.com\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSdy=\Q$date_of_death\E.*&GRid=\d+/i) {
 				$match = 1;
 			}
-		} elsif(defined($dob)) {
-			if($link =~ /www.findagrave.com\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSby=\Q$dob\E.*&GRid=\d+/i) {
+		} elsif(defined($date_of_birth)) {
+			if($link =~ /www.findagrave.com\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSby=\Q$date_of_birth\E.*&GRid=\d+/i) {
 				$match = 1;
 			}
 		}
@@ -205,6 +220,7 @@ automatically be notified of progress on your bug as I make changes.
 =head1 SEE ALSO
 
 L<http://https://github.com/nigelhorne/gedgrave>
+L<http://www.findagrave.com>
 
 =head1 SUPPORT
 
