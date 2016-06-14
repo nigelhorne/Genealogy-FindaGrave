@@ -1,0 +1,9 @@
+./Changes
+./lib/WWW/Scraper/FindaGrave.pm
+./LICENSE
+./Makefile.PL
+./MANIFEST
+./README.md
+./t/00-load.t
+./t/10-new.t
+./t/20-findagrave.t
