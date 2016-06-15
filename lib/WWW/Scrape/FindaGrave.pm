@@ -21,7 +21,7 @@ our $VERSION = '0.02';
 =head1 SYNOPSIS
 
     use HTTP::Cache::Transparent;  # be nice
-    use WWW::Scape::FindaGrave;
+    use WWW::Scrape::FindaGrave;
 
     HTTP::Cache::Transparent::init({
     	BasePath => '/var/cache/findagrave'
@@ -213,7 +213,7 @@ Nigel Horne, C<< <njh at bandsman.co.uk> >>
 
 Please report any bugs or feature requests to C<bug-www-scrape-findagrave at rt.cpan.org>,
 or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scape-FindaGrave>.
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scrape-FindaGrave>.
 I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
@@ -226,7 +226,7 @@ L<http://www.findagrave.com>
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::Scape::FindaGrave
+    perldoc WWW::Scrape::FindaGrave
 
 
 You can also look for information at:
@@ -235,19 +235,19 @@ You can also look for information at:
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scape-FindaGrave>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scrape-FindaGrave>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/WWW-Scape-FindaGrave>
+L<http://annocpan.org/dist/WWW-Scrape-FindaGrave>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/WWW-Scape-FindaGrave>
+L<http://cpanratings.perl.org/d/WWW-Scrape-FindaGrave>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/WWW-Scape-FindaGrave/>
+L<http://search.cpan.org/dist/WWW-Scrape-FindaGrave/>
 
 =back
 
@@ -261,4 +261,4 @@ This program is released under the following licence: GPL
 
 =cut
 
-1; # End of WWW::Scape::FindaGrave
+1; # End of WWW::Scrape::FindaGrave
