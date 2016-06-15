@@ -1,5 +1,5 @@
 # WWW-Scrape-FindaGrave
-Scrape the FindaGrave site
+Scrape the Find a Grave site
 
     use HTTP::Cache::Transparent;  # be nice
     use WWW::Scape::FindaGrave;

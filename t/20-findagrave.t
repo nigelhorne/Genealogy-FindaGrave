@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::Most tests => 12;
+use Test::Most tests => 15;
 use Test::NoWarnings;
 use Test::URI;
 
@@ -40,6 +40,16 @@ FINDAGRAVE: {
 		middlename => 'John',
 		lastname => 'Culmer',
 		country => 'England',
+		date_of_death => 1862
+	});
+	ok(defined $f);
+	ok($f->isa('WWW::Scrape::FindaGrave'));
+	ok(!defined($f->get_next_entry()));
+
+	$f = WWW::Scrape::FindaGrave->new({
+		firstname => 'Daniel',
+		lastname => 'Culmer',
+		country => 'United States',
 		date_of_death => 1862
 	});
 	ok(defined $f);
