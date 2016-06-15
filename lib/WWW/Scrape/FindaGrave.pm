@@ -8,7 +8,7 @@ use HTML::SimpleLinkExtor;
 
 =head1 NAME
 
-WWW::Scrape::FindaGrave - Scrape the FindaGrave site
+WWW::Scrape::FindaGrave - Scrape the Find a Grave website
 
 =head1 VERSION
 
@@ -219,7 +219,7 @@ automatically be notified of progress on your bug as I make changes.
 
 =head1 SEE ALSO
 
-L<http://https://github.com/nigelhorne/gedgrave>
+L<https://github.com/nigelhorne/gedgrave>
 L<http://www.findagrave.com>
 
 =head1 SUPPORT
