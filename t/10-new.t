@@ -2,7 +2,8 @@
 
 use strict;
 
-use Test::Most tests => 1;
+use Test::Most tests => 2;
+use Test::NoWarnings;
 
 use WWW::Scrape::FindaGrave;
 
