@@ -59,10 +59,15 @@ WriteMakefile(
 
 sub are_online
 {
+	my $host = 'www.findagrave.com:80';
+
+	if($ENV{'http_proxy'} && ($ENV{'http_proxy'} =~ /^.+\/\/(\w+:\d+)$/)) {
+		$host = $1;
+	}
 	my $s = IO::Socket::INET->new(
 		# PeerAddr => 'www.ripe.net:43',
 		# PeerAddr => 'whois.apnic.net:43',
-		PeerAddr => 'www.findagrave.com:80',
+		PeerAddr => $host,
 		Timeout => 5
 	);
 	if($s) {
