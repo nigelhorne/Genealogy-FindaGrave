@@ -2,7 +2,7 @@ Revision history for WWW::Scaper::FindaGrave
 
 0.03
 	Added Travis and Coveralls integration
-	Don't try connection tests when not on-line
+	Don't try tests when not on-line
 
 0.02	Tue Jun 14 19:48:02 EDT 2016
 	Added a few more tests

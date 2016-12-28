@@ -19,6 +19,9 @@ if($online_tests) {
 	close($enabled) || die "Can't touch t/online.enabled $!";
 } else {
 	unlink('t/online.enabled');
+	print STDERR "NA: WWW::Scrape::FindaGrave needs a permanent connexion to the Internet\n";
+	exit(0);
+# }
 }
 
 WriteMakefile(
