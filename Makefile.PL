@@ -44,6 +44,7 @@ WriteMakefile(
 	'WWW::Mechanize::GZip' => 0,
 	'LWP::UserAgent' => 0,
 	'HTML::SimpleLinkExtor' => 0,
+	'LWP::Protocol::https' => 0,
     },
     dist		=> { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean		=> { FILES => 'WWW-Scrape-FindaGrave-*' },
