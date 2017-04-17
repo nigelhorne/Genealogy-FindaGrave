@@ -13,3 +13,4 @@ WWW-Scape-FindaGrave-*
 .git
 *.swp
 t/online.enabled
+.travis.yml
