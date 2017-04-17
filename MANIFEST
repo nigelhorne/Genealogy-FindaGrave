@@ -1,5 +1,6 @@
 .travis.yml
 Changes
+ignore.txt
 lib/WWW/Scrape/FindaGrave.pm
 LICENCE
 Makefile.PL
@@ -22,6 +23,7 @@ t/metrics.t
 t/noplan.t
 t/pod-cm.t
 t/pod.t
+t/port.t
 t/prereq.t
 t/snippets.t
 t/spelling.t
