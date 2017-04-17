@@ -44,7 +44,7 @@ our $VERSION = '0.02';
 
 Creates a WWW::Scrape::FindaGrave object.
 
-It takes two manadatory arguments firstname and lastname.
+It takes two mandatory arguments firstname and lastname.
 
 Also one of either date_of_birth and date_of_death must be given
 
