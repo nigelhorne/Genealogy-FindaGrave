@@ -12,11 +12,11 @@ WWW::Scrape::FindaGrave - Scrape the Find a Grave website
 
 =head1 VERSION
 
-Version 0.02
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -24,17 +24,17 @@ our $VERSION = '0.02';
     use WWW::Scrape::FindaGrave;
 
     HTTP::Cache::Transparent::init({
-    	BasePath => '/var/cache/findagrave'
+	BasePath => '/var/cache/findagrave'
     });
     my $f = WWW::Scrape::FindaGrave->new({
-    	firstname => 'John',
-    	lastname => 'Smith',
-    	country => 'England',
-    	date_of_death => 1862
+	firstname => 'John',
+	lastname => 'Smith',
+	country => 'England',
+	date_of_death => 1862
     });
 
     while(my $url = $f->get_next_entry()) {
-    	print "$url\n";
+	print "$url\n";
     }
 }
 
@@ -254,10 +254,9 @@ L<http://search.cpan.org/dist/WWW-Scrape-FindaGrave/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016 Nigel Horne.
+Copyright 2016-2017 Nigel Horne.
 
 This program is released under the following licence: GPL
-
 
 =cut
 
