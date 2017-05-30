@@ -8,10 +8,16 @@ use IO::Socket::INET;
 
 my $online_tests;
 
-Getopt::Long::GetOptions('online-tests!' => \$online_tests);
-
-if(!defined($online_tests)) {
+if($ENV{RELEASE_TESTING}) {
 	$online_tests = are_online();
+} elsif($ENV{AUTOMATED_TESTING} || $ENV{NO_NETWORK_TESTING}) {
+	$online_tests = 0;
+} else {
+	Getopt::Long::GetOptions('online-tests!' => \$online_tests);
+
+	if(!defined($online_tests)) {
+		$online_tests = are_online();
+	}
 }
 
 if($online_tests) {
@@ -75,10 +81,6 @@ sub are_online
 		Timeout => 5
 	);
 	if($s) {
-		if($ENV{AUTOMATED_TESTING}) {
-			return 1;
-		}
-
 		print <<EOF;
 
 You appear to be directly connected to the Internet.  I have some tests

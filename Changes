@@ -1,5 +1,8 @@
 Revision history for WWW::Scaper::FindaGrave
 
+0.04
+	Added ua option to new
+
 0.03	Tue May 23 10:33:01 EDT 2017
 	Added Travis and Coveralls integration
 	Don't try tests when not on-line

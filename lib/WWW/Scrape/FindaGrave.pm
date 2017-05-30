@@ -48,8 +48,11 @@ It takes two mandatory arguments firstname and lastname.
 
 Also one of either date_of_birth and date_of_death must be given
 
-There are two optional arguments: middlename and mech.  Mech is a pointer
+There are three optional arguments: middlename, ua and mech.  Mech is a pointer
 to an object such as L<WWW::Mechanize>.  If not given it will be created.
+
+ua is a pointer to an obect that understands get and env_proxy messages, such
+as L<LWP::UserAgent>.
 =cut
 
 sub new {
@@ -134,7 +137,7 @@ sub new {
 
 	# Shows 40 per page
 	$rc->{'base'} = $resp->base();
-	$rc->{'ua'} = LWP::UserAgent->new(
+	$rc->{'ua'} = $args{'ua'} || LWP::UserAgent->new(
 			keep_alive => 1,
 			agent => __PACKAGE__,
 			from => 'foo@example.com',
