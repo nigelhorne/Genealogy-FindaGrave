@@ -5,6 +5,7 @@ use strict;
 use WWW::Mechanize::GZip;
 use LWP::UserAgent;
 use HTML::SimpleLinkExtor;
+use LWP::Protocol::https;
 
 =head1 NAME
 
@@ -51,7 +52,7 @@ Also one of either date_of_birth and date_of_death must be given
 There are three optional arguments: middlename, ua and mech.  Mech is a pointer
 to an object such as L<WWW::Mechanize>.  If not given it will be created.
 
-ua is a pointer to an obect that understands get and env_proxy messages, such
+ua is a pointer to an object that understands get and env_proxy messages, such
 as L<LWP::UserAgent>.
 =cut
 

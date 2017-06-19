@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 use Getopt::Long;	# Technique inspired by IO::Lambda
-use ExtUtils::MakeMaker;
+use ExtUtils::MakeMaker 6.64;	# 6.64 for TEST_REQUIRES
 use IO::Socket::INET;
 
 my $online_tests;
@@ -27,7 +27,6 @@ if($online_tests) {
 	unlink('t/online.enabled');
 	print STDERR "NA: WWW::Scrape::FindaGrave needs a permanent connexion to the Internet\n";
 	exit(0);
-# }
 }
 
 WriteMakefile(
@@ -40,7 +39,7 @@ WriteMakefile(
       ? ('LICENSE'=> 'GPL')
       : ()),
     PL_FILES	=> {},
-    BUILD_REQUIRES => {
+    TEST_REQUIRES => {
 	'Test::Most' => 0,
 	'Test::NoWarnings' => 0,
 	'Test::URI' => 0,
@@ -72,6 +71,8 @@ sub are_online
 	my $host = 'www.findagrave.com:80';
 
 	if($ENV{'http_proxy'} && ($ENV{'http_proxy'} =~ /^.+\/\/(\w+:\d+)$/)) {
+		$host = $1;
+	} elsif($ENV{'HTTP_PROXY'} && ($ENV{'HTTP_PROXY'} =~ /^.+\/\/(\w+:\d+)$/)) {
 		$host = $1;
 	}
 	my $s = IO::Socket::INET->new(
