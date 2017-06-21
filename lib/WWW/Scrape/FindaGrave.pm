@@ -70,7 +70,7 @@ sub new {
 		unless($args{'date_of_death'} || $args{'date_of_birth'});
 
 	my $rc = {
-		mech => $args{'mech'} || WWW::Mechanize::GZip->new(),
+		mech => $args{'mech'} || WWW::Mechanize::GZip->new(noproxy => 0),
 		date_of_birth => $args{'date_of_birth'},
 		date_of_death => $args{'date_of_death'},
 		country => $args{'country'},
