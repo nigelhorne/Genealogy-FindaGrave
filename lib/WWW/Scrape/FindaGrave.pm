@@ -53,7 +53,7 @@ There are three optional arguments: middlename, ua and mech.  Mech is a pointer
 to an object such as L<WWW::Mechanize>.  If not given it will be created.
 
 ua is a pointer to an object that understands get and env_proxy messages, such
-as L<LWP::UserAgent>.
+as L<LWP::UserAgent::Throttled>.
 =cut
 
 sub new {
