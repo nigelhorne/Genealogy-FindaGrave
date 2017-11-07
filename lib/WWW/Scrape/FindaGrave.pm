@@ -13,11 +13,11 @@ WWW::Scrape::FindaGrave - Scrape the Find a Grave website
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 SYNOPSIS
 
@@ -78,8 +78,10 @@ sub new {
 		middlename => $args{'middlename'},
 		lastname => $args{'lastname'},
 	};
+	$rc->{'host'} = $args{'host'} || 'old.findagrave.com';
 
-	my $resp = $rc->{'mech'}->get('http://www.findagrave.com/cgi-bin/fg.cgi');
+	my $page = 'https://' . $rc->{'host'} . '/cgi-bin/fg.cgi';
+	my $resp = $rc->{'mech'}->get($page);
 	unless($resp->is_success()) {
 		die $resp->status_line;
 	}
@@ -162,6 +164,7 @@ sub get_next_entry
 {
 	my $self = shift;
 
+	return if(!defined($self->{'matches'} == 0));
 	return if($self->{'matches'} == 0);
 
 	my $rc = pop @{$self->{'results'}};
@@ -181,12 +184,13 @@ sub get_next_entry
 
 	foreach my $link ($e->links) {
 		my $match = 0;
+		my $host = $self->{'host'};
 		if($date_of_death) {
-			if($link =~ /www.findagrave.com\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSdy=\Q$date_of_death\E.*&GRid=\d+/i) {
+			if($link =~ /\Q$host\E\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSdy=\Q$date_of_death\E.*&GRid=\d+/i) {
 				$match = 1;
 			}
 		} elsif(defined($date_of_birth)) {
-			if($link =~ /www.findagrave.com\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSby=\Q$date_of_birth\E.*&GRid=\d+/i) {
+			if($link =~ /\Q$host\E\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSby=\Q$date_of_birth\E.*&GRid=\d+/i) {
 				$match = 1;
 			}
 		}
@@ -224,7 +228,7 @@ automatically be notified of progress on your bug as I make changes.
 =head1 SEE ALSO
 
 L<https://github.com/nigelhorne/gedgrave>
-L<http://www.findagrave.com>
+L<https://old.findagrave.com>
 
 =head1 SUPPORT
 
