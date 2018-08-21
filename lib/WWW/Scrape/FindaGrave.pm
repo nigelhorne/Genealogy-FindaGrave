@@ -164,7 +164,7 @@ sub get_next_entry
 {
 	my $self = shift;
 
-	return if(!defined($self->{'matches'} == 0));
+	return if(!defined($self->{'matches'}));
 	return if($self->{'matches'} == 0);
 
 	my $rc = pop @{$self->{'results'}};
@@ -227,7 +227,7 @@ automatically be notified of progress on your bug as I make changes.
 
 =head1 SEE ALSO
 
-L<https://github.com/nigelhorne/gedgrave>
+L<https://github.com/nigelhorne/gedcom>
 L<https://old.findagrave.com>
 
 =head1 SUPPORT
@@ -235,7 +235,6 @@ L<https://old.findagrave.com>
 You can find documentation for this module with the perldoc command.
 
     perldoc WWW::Scrape::FindaGrave
-
 
 You can also look for information at:
 
@@ -255,14 +254,13 @@ L<http://cpanratings.perl.org/d/WWW-Scrape-FindaGrave>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/WWW-Scrape-FindaGrave/>
+L<https://metacpan.org/release/WWW-Scrape-FindaGrave>
 
 =back
 
-
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016-2017 Nigel Horne.
+Copyright 2016-2018 Nigel Horne.
 
 This program is released under the following licence: GPL
 

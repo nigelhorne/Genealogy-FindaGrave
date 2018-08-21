@@ -9,7 +9,7 @@ FINDAGRAVE: {
 	unless(-e 't/online.enabled') {
 		plan skip_all => 'On-line tests disabled';
 	} else {
-		plan tests => 14;
+		plan tests => 13;
 
 		use_ok('WWW::Scrape::FindaGrave');
 		my $f = WWW::Scrape::FindaGrave->new({
