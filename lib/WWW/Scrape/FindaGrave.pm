@@ -7,6 +7,14 @@ use LWP::UserAgent;
 use HTML::SimpleLinkExtor;
 use LWP::Protocol::https;
 
+# TODO: new interface
+#
+# Request:
+# https://www.findagrave.com/memorial/search?firstname=Edmund&middlename=Frank&lastname=Horne&birthyear=&birthyearfilter=&deathyear=&deathyearfilter=&location=&locationId=&memorialid=&datefilter=&orderby=
+#
+# Results
+# <a class="memorial-item" href="/memorial/92467529/edmund-frank-horne" id="sr-92467529" data-scroll-offset="1">
+
 =head1 NAME
 
 WWW::Scrape::FindaGrave - Scrape the Find a Grave website
