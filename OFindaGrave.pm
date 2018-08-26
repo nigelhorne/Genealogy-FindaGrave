@@ -77,56 +77,88 @@ sub new {
 	die "You must give one of the date of birth or death"
 		unless($args{'date_of_death'} || $args{'date_of_birth'});
 
-	my $ua = delete $args{ua} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
-	# if(!defined($param{'host'})) {
-		# $ua->ssl_opts(verify_hostname => 0);	# Yuck
-	# }
-
 	my $rc = {
-		ua => $ua,
+		mech => $args{'mech'} || WWW::Mechanize::GZip->new(noproxy => 0),
 		date_of_birth => $args{'date_of_birth'},
 		date_of_death => $args{'date_of_death'},
 		country => $args{'country'},
 		firstname => $args{'firstname'},
 		middlename => $args{'middlename'},
 		lastname => $args{'lastname'},
-		matches => 0,
 	};
-	$rc->{'host'} = $args{'host'} || 'www.findagrave.com';
+	$rc->{'host'} = $args{'host'} || 'old.findagrave.com';
 
-	my $uri = URI->new("https://$rc->{host}/");
-	my $page = 'https://' . $rc->{'host'} . '/memorial/search';
-	my %query_parameters;
-	if($args{'firstname'}) {
-		$query_parameters{'firstname'} = $args{'firstname'};
-	}
-	if($args{'middlename'}) {
-		$query_parameters{'middlename'} = $args{'middlename'};
-	}
-	if($args{'lastname'}) {
-		$query_parameters{'lastname'} = $args{'lastname'};
-	}
-	if($args{'date_of_birth'}) {
-		$query_parameters{'birthyear'} = $args{'date_of_birth'};
-	}
-	if($args{'date_of_death'}) {
-		$query_parameters{'deathyear'} = $args{'date_of_death'};
-	}
-	$uri->query_form(%query_parameters);
-	my $url = $uri->as_string();
-
-	my $resp = $ua->get($url);
-
-	if($resp->is_error()) {
-		Carp::carp("API returned error: on $url ", $resp->status_line());
-		return { };
-	}
-
+	my $page = 'https://' . $rc->{'host'} . '/cgi-bin/fg.cgi';
+	my $resp = $rc->{'mech'}->get($page);
 	unless($resp->is_success()) {
-		die $resp->status_line();
+		die $resp->status_line;
 	}
 
+	my %fields = (
+		GSfn => $rc->{'firstname'},
+		GSln => $rc->{'lastname'},
+		GSiman => 0,
+		GSpartial => 0,
+	);
+
+	if($rc->{date_of_death}) {
+		$fields{GSdy} = $rc->{date_of_death};
+		$fields{GSdyrel} = 'in';
+	} elsif($rc->{'date_of_birth'}) {
+		$fields{GSby} = $rc->{date_of_birth};
+		$fields{GSbyrel} = 'in';
+	}
+
+	if($rc->{'middlename'}) {
+		$fields{GSmn} = $rc->{'middlename'};
+	}
+
+	# Don't enable this.  If we know the date of birth but findagrave
+	# doesn't, findagrave will miss the match. Of course, the downside
+	# of not doing this is that you will get false positives.  It's really
+	# a problem with findagrave.
+	# if($date_of_birth) {
+		# $fields{GSby} = $date_of_birth;
+		# $fields{GSbyrel} = 'in';
+	# }
+
+	if($rc->{'country'}) {
+		if($rc->{'country'} eq 'United States') {
+			$fields{GScntry} = 'The United States';
+		} else {
+			$fields{GScntry} = $rc->{'country'};
+		}
+	}
+
+	$resp = $rc->{'mech'}->submit_form(
+		form_number => 1,
+		fields => \%fields,
+	);
+	unless($resp->is_success) {
+		die $resp->status_line;
+	}
+	if($resp->content =~ /Sorry, there are no records in the Find A Grave database matching your query\./) {
+		$rc->{'matches'} = 0;
+		return bless $rc, $class;
+	}
+	if($resp->content =~ /<B>(\d+)<\/B>\s+total matches/mi) {
+		$rc->{'matches'} = $1;
+		return bless $rc, $class if($rc->{'matches'} == 0);
+	}
+
+	# Shows 40 per page
+	$rc->{'base'} = $resp->base();
+	$rc->{'ua'} = $args{'ua'} || LWP::UserAgent->new(
+			keep_alive => 1,
+			agent => __PACKAGE__,
+			from => 'foo@example.com',
+			timeout => 10,
+		);
+
+	$rc->{'ua'}->env_proxy(1);
+	$rc->{'index'} = 0;
 	$rc->{'resp'} = $resp;
+
 	return bless $rc, $class;
 }
 
@@ -140,6 +172,14 @@ sub get_next_entry
 {
 	my $self = shift;
 
+	return if(!defined($self->{'matches'}));
+	return if($self->{'matches'} == 0);
+
+	my $rc = pop @{$self->{'results'}};
+	return $rc if $rc;
+
+	return if($self->{'index'} >= $self->{'matches'});
+
 	my $firstname = $self->{'firstname'};
 	my $lastname = $self->{'lastname'};
 	my $date_of_death = $self->{'date_of_death'};
@@ -147,15 +187,26 @@ sub get_next_entry
 
 	my $base = $self->{'resp'}->base();
 	my $e = HTML::SimpleLinkExtor->new($base);
-
 	$e->remove_tags('img', 'script');
 	$e->parse($self->{'resp'}->content);
 
 	foreach my $link ($e->links) {
 		my $match = 0;
 		my $host = $self->{'host'};
-		if($link =~ /\/memorial\/\Q$firstname\E.+\Qlastname\E/) {
-			$match = 1;
+		if($date_of_death) {
+			if($link =~ /\Q$host\E\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSdy=\Q$date_of_death\E.*&GRid=\d+/i) {
+				$match = 1;
+			}
+		} elsif(defined($date_of_birth)) {
+			if($link =~ /\Q$host\E\/cgi-bin\/fg.cgi\?.*&GSln=\Q$lastname\E.*&GSfn=\Q$firstname\E.*&GSby=\Q$date_of_birth\E.*&GRid=\d+/i) {
+				$match = 1;
+			}
+		}
+		if($match && $self->{'country'}) {
+			my $country = $self->{'country'};
+			if($self->{'resp'}->content !~ /\Q$country\E/i) {
+				$match = 0;
+			}
 		}
 		if($match) {
 			push @{$self->{'results'}}, $link;
@@ -164,7 +215,7 @@ sub get_next_entry
 	$self->{'index'}++;
 	if($self->{'index'} <= $self->{'matches'}) {
 		my $index = $self->{'index'};
-		# $self->{'resp'} = $self->{'ua'}->get("$base&sr=$index");
+		$self->{'resp'} = $self->{'ua'}->get("$base&sr=$index");
 	}
 
 	return pop @{$self->{'results'}};
