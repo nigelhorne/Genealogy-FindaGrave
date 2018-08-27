@@ -96,7 +96,6 @@ sub new {
 	};
 	$rc->{'host'} = $args{'host'} || 'www.findagrave.com';
 
-	my $uri = URI->new("https://$rc->{host}/memorial/search");
 	my %query_parameters;
 	if($args{'firstname'}) {
 		$query_parameters{'firstname'} = $args{'firstname'};
@@ -121,6 +120,7 @@ sub new {
 			$query_parameters{'location'} = $args{'country'};
 		}
 	}
+	my $uri = URI->new("https://$rc->{host}/memorial/search");
 	$uri->query_form(%query_parameters);
 	my $url = $uri->as_string();
 
@@ -143,6 +143,8 @@ sub new {
 	if($resp->content() =~ /\s(\d+)\smatching record found for/mi) {
 		$rc->{'matches'} = $1;
 		return bless $rc, $class if($rc->{'matches'} == 0);
+		$rc->{'page'} = 1;
+		$rc->{'query_parameters'} = \%query_parameters;
 	}
 	return bless $rc, $class;
 }
@@ -167,14 +169,14 @@ sub get_next_entry
 
 	my $firstname = $self->{'firstname'};
 	my $lastname = $self->{'lastname'};
-	my $date_of_death = $self->{'date_of_death'};
-	my $date_of_birth = $self->{'date_of_birth'};
+	# my $date_of_death = $self->{'date_of_death'};	# FIXME: check results against this
+	# my $date_of_birth = $self->{'date_of_birth'};	# FIXME: check results against this
 
 	my $base = $self->{'resp'}->base();
 	my $e = HTML::SimpleLinkExtor->new($base);
 
 	$e->remove_tags('img', 'script');
-	$e->parse($self->{'resp'}->content);
+	$e->parse($self->{'resp'}->content());	# FIXME: having to parse every time
 
 	foreach my $link ($e->links()) {
 		my $match = 0;
@@ -187,8 +189,29 @@ sub get_next_entry
 	}
 	$self->{'index'}++;
 	if($self->{'index'} <= $self->{'matches'}) {
-		my $index = $self->{'index'};
-		# $self->{'resp'} = $self->{'ua'}->get("$base&sr=$index");
+		$self->{'page'}++;
+		::diag($self->{'page'});
+		$self->{'query_parameters'}->{'page'} = $self->{'page'};
+
+		my $uri = URI->new("https://$self->{host}/memorial/search");
+		$uri->query_form(%{$self->{'query_parameters'}});
+		my $url = $uri->as_string();
+
+		my $resp = $self->{'ua'}->get($url);
+		$self->{'resp'} = $resp;
+
+		if($resp->is_error()) {
+			Carp::carp("API returned error: on $url ", $resp->status_line());
+			return { };
+		}
+
+		unless($resp->is_success()) {
+			die $resp->status_line();
+		}
+
+		if($resp->content() =~ /Sorry, there are no records in the Find A Grave database matching your query\./) {
+			return;
+		}
 	}
 
 	return pop @{$self->{'results'}};
@@ -243,7 +266,7 @@ L<https://metacpan.org/release/WWW-Scrape-FindaGrave>
 
 Copyright 2016-2018 Nigel Horne.
 
-This program is released under the following licence: GPL
+This program is released under the following licence: GPL2
 
 =cut
 
