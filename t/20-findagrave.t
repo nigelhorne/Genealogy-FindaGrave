@@ -23,7 +23,7 @@ FINDAGRAVE: {
 
 		while(my $link = $f->get_next_entry()) {
 			diag($link);
-			uri_host_ok($link, 'old.findagrave.com');
+			uri_host_ok($link, 'www.findagrave.com');
 		}
 		ok(!defined($f->get_next_entry()));
 

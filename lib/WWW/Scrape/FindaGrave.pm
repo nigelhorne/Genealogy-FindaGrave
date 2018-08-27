@@ -78,6 +78,8 @@ sub new {
 		unless($args{'date_of_death'} || $args{'date_of_birth'});
 
 	my $ua = delete $args{ua} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
+	$ua->env_proxy(1);
+
 	# if(!defined($param{'host'})) {
 		# $ua->ssl_opts(verify_hostname => 0);	# Yuck
 	# }
@@ -91,11 +93,11 @@ sub new {
 		middlename => $args{'middlename'},
 		lastname => $args{'lastname'},
 		matches => 0,
+		index => 0,
 	};
 	$rc->{'host'} = $args{'host'} || 'www.findagrave.com';
 
-	my $uri = URI->new("https://$rc->{host}/");
-	my $page = 'https://' . $rc->{'host'} . '/memorial/search';
+	my $uri = URI->new("https://$rc->{host}/memorial/search");
 	my %query_parameters;
 	if($args{'firstname'}) {
 		$query_parameters{'firstname'} = $args{'firstname'};
@@ -126,7 +128,15 @@ sub new {
 		die $resp->status_line();
 	}
 
+	if($resp->content() =~ /Sorry, there are no records in the Find A Grave database matching your query\./) {
+		$rc->{'matches'} = 0;
+		return bless $rc, $class;
+	}
 	$rc->{'resp'} = $resp;
+	if($resp->content() =~ /\s(\d+)\smatching record found for/mi) {
+		$rc->{'matches'} = $1;
+		return bless $rc, $class if($rc->{'matches'} == 0);
+	}
 	return bless $rc, $class;
 }
 
@@ -140,6 +150,14 @@ sub get_next_entry
 {
 	my $self = shift;
 
+	return if(!defined($self->{'matches'}));
+	return if($self->{'matches'} == 0);
+
+	my $rc = pop @{$self->{'results'}};
+	return $rc if $rc;
+
+	return if($self->{'index'} >= $self->{'matches'});
+
 	my $firstname = $self->{'firstname'};
 	my $lastname = $self->{'lastname'};
 	my $date_of_death = $self->{'date_of_death'};
@@ -151,10 +169,9 @@ sub get_next_entry
 	$e->remove_tags('img', 'script');
 	$e->parse($self->{'resp'}->content);
 
-	foreach my $link ($e->links) {
+	foreach my $link ($e->links()) {
 		my $match = 0;
-		my $host = $self->{'host'};
-		if($link =~ /\/memorial\/\Q$firstname\E.+\Qlastname\E/) {
+		if($link =~ /\/memorial\/\d+\/\Q$firstname\E.+\Q$lastname\E/i) {
 			$match = 1;
 		}
 		if($match) {
