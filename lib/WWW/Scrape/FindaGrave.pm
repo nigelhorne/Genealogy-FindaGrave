@@ -2,7 +2,6 @@ package WWW::Scrape::FindaGrave;
 
 use warnings;
 use strict;
-use WWW::Mechanize::GZip;
 use LWP::UserAgent;
 use HTML::SimpleLinkExtor;
 use LWP::Protocol::https;
