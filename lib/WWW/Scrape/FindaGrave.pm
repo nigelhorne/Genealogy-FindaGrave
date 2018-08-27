@@ -114,6 +114,14 @@ sub new {
 	if($args{'date_of_death'}) {
 		$query_parameters{'deathyear'} = $args{'date_of_death'};
 	}
+	if($args{'country'}) {
+		if($args{'country'} eq 'United States') {
+			$query_parameters{'location'} = 'United States of America';
+			$query_parameters{'locationId'} = 'country_4';
+		} else {
+			$query_parameters{'location'} = $args{'country'};
+		}
+	}
 	$uri->query_form(%query_parameters);
 	my $url = $uri->as_string();
 
@@ -202,7 +210,7 @@ automatically be notified of progress on your bug as I make changes.
 =head1 SEE ALSO
 
 L<https://github.com/nigelhorne/gedcom>
-L<https://old.findagrave.com>
+L<https://www.findagrave.com>
 
 =head1 SUPPORT
 

@@ -46,7 +46,6 @@ WriteMakefile(
 	# 'Test::Kwalitee' => 0,
     },
     PREREQ_PM => {
-	'WWW::Mechanize::GZip' => 0,
 	'LWP::UserAgent' => 0,
 	'HTML::SimpleLinkExtor' => 0,
 	'LWP::Protocol::https' => 0,
