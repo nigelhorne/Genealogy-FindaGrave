@@ -218,10 +218,6 @@ sub get_next_entry
 		unless($resp->is_success()) {
 			die $resp->status_line();
 		}
-
-		if($resp->content() =~ /Sorry, there are no records in the Find A Grave database matching your query\./) {
-			return;
-		}
 	}
 
 	return pop @{$self->{'results'}};
