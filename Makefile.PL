@@ -46,6 +46,7 @@ WriteMakefile(
 	# 'Test::Kwalitee' => 0,
     },
     PREREQ_PM => {
+    	'Carp' => 0,
 	'LWP::UserAgent' => 0,
 	'HTML::SimpleLinkExtor' => 0,
 	'LWP::Protocol::https' => 0,

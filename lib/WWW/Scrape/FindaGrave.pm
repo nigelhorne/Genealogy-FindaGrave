@@ -5,6 +5,7 @@ use strict;
 use LWP::UserAgent;
 use HTML::SimpleLinkExtor;
 use LWP::Protocol::https;
+use Carp;
 
 # TODO: new interface
 #
@@ -70,7 +71,15 @@ sub new {
 
 	return unless(defined($class));
 
-	my %args = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
+	my %args;
+	if(ref($_[0]) eq 'HASH') {
+		%args = %{$_[0]};
+	} elsif(ref($_[0])) {
+		Carp::croak("Usage: __PACKAGE__->new(%args)");
+	} elsif(@_ % 2 == 0) {
+		%args = @_;
+	}
+
 
 	die "First name is not optional" unless($args{'firstname'});
 	die "Last name is not optional" unless($args{'lastname'});
@@ -139,16 +148,14 @@ sub new {
 		die $resp->status_line();
 	}
 
-	if($resp->content() =~ /Sorry, there are no records in the Find A Grave database matching your query\./) {
-		$rc->{'matches'} = 0;
-		return bless $rc, $class;
-	}
 	$rc->{'resp'} = $resp;
 	if($resp->content() =~ /\s(\d+)\smatching record found for/mi) {
 		$rc->{'matches'} = $1;
 		return bless $rc, $class if($rc->{'matches'} == 0);
 		$rc->{'page'} = 1;
 		$rc->{'query_parameters'} = \%query_parameters;
+	} else {
+		$rc->{'matches'} = 0;
 	}
 	return bless $rc, $class;
 }
