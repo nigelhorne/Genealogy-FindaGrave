@@ -56,8 +56,9 @@ It takes two mandatory arguments firstname and lastname.
 
 Also one of either date_of_birth and date_of_death must be given
 
-There are three optional arguments: middlename, ua and mech.  Mech is a pointer
-to an object such as L<WWW::Mechanize>.  If not given it will be created.
+There are three optional arguments: middlename, ua and host.
+
+host is the domain of the site to search, the default is www.findagrave.com.
 
 ua is a pointer to an object that understands get and env_proxy messages, such
 as L<LWP::UserAgent::Throttled>.
