@@ -7,8 +7,6 @@ use HTML::SimpleLinkExtor;
 use LWP::Protocol::https;
 use Carp;
 
-# TODO: new interface
-#
 # Request:
 # https://www.findagrave.com/memorial/search?firstname=Edmund&middlename=Frank&lastname=Horne&birthyear=&birthyearfilter=&deathyear=&deathyearfilter=&location=&locationId=&memorialid=&datefilter=&orderby=
 #
