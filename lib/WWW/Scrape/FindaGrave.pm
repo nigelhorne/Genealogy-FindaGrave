@@ -193,7 +193,6 @@ sub get_next_entry
 	$self->{'index'}++;
 	if($self->{'index'} <= $self->{'matches'}) {
 		$self->{'page'}++;
-		::diag($self->{'page'});
 		$self->{'query_parameters'}->{'page'} = $self->{'page'};
 
 		my $uri = URI->new("https://$self->{host}/memorial/search");
