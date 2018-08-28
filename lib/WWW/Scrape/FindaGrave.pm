@@ -116,6 +116,9 @@ sub new {
 		if($args{'country'} eq 'United States') {
 			$query_parameters{'location'} = 'United States of America';
 			$query_parameters{'locationId'} = 'country_4';
+		} elsif($args{'country'} eq 'England') {
+			$query_parameters{'location'} = 'England';
+			$query_parameters{'locationId'} = 'country_5';
 		} else {
 			$query_parameters{'location'} = $args{'country'};
 		}
