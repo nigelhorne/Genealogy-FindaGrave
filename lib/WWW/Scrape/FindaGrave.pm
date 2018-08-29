@@ -53,7 +53,7 @@ Creates a WWW::Scrape::FindaGrave object.
 
 It takes two mandatory arguments firstname and lastname.
 
-Also one of either date_of_birth and date_of_death must be given
+Also one of either date_of_birth and date_of_death must be given.
 
 There are three optional arguments: middlename, ua and host.
 
