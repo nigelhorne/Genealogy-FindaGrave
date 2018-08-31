@@ -52,12 +52,12 @@ FINDAGRAVE: {
 		ok($f->isa('WWW::Scrape::FindaGrave'));
 		ok(!defined($f->get_next_entry()));
 
-		$f = WWW::Scrape::FindaGrave->new({
+		$f = WWW::Scrape::FindaGrave->new(
 			firstname => 'Daniel',
 			lastname => 'Culmer',
 			country => 'United States',
 			date_of_death => 1862
-		});
+		);
 		ok(defined $f);
 		ok($f->isa('WWW::Scrape::FindaGrave'));
 		ok(!defined($f->get_next_entry()));
