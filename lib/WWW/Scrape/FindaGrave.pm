@@ -149,7 +149,7 @@ sub new {
 	$rc->{'resp'} = $resp;
 	if($resp->content() =~ /\s(\d+)\smatching record found for/mi) {
 		$rc->{'matches'} = $1;
-		return bless $rc, $class if($rc->{'matches'} == 0);
+		return bless $rc, $class if($1 == 0);
 		$rc->{'page'} = 1;
 		$rc->{'query_parameters'} = \%query_parameters;
 	} else {
