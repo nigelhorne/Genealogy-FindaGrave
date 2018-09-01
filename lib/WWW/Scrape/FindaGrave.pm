@@ -15,7 +15,7 @@ use Carp;
 
 =head1 NAME
 
-WWW::Scrape::FindaGrave - Scrape the Find a Grave website
+WWW::Scrape::FindaGrave - Find people on FindaGrave
 
 =head1 VERSION
 

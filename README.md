@@ -3,9 +3,9 @@
 [![Coverage Status](https://coveralls.io/repos/github/nigelhorne/WWW-Scrape-FindaGrave/badge.svg?branch=master)](https://coveralls.io/github/nigelhorne/WWW-Scrape-FindaGrave?branch=master)
 [![Dependency Status](https://dependencyci.com/github/nigelhorne/WWW-Scrape-FindaGrave/badge)](https://dependencyci.com/github/nigelhorne/WWW-Scrape-FindaGrave)
 
-# WWW::Scrape::FindaGrave
+# NAME
 
-Scrape the Find a Grave website
+WWW::Scrape::FindaGrave - Find people on FindaGrave
 
 # VERSION
 
@@ -39,9 +39,9 @@ Creates a WWW::Scrape::FindaGrave object.
 
 It takes two mandatory arguments firstname and lastname.
 
-Also one of either date\_of\_birth and date\_of\_death must be given
+Also one of either date\_of\_birth and date\_of\_death must be given.
 
-There are three optional arguments: middlename, ua and host.
+There are foud optional arguments: middlename, country, ua and host.
 
 host is the domain of the site to search, the default is www.findagrave.com.
 
