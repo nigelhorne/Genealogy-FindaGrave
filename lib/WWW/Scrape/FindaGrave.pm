@@ -15,7 +15,7 @@ use Carp;
 
 =head1 NAME
 
-WWW::Scrape::FindaGrave - Find people on FindaGrave
+WWW::Scrape::FindaGrave - Find URLs on FindaGrave for a person
 
 =head1 VERSION
 
@@ -55,7 +55,7 @@ It takes two mandatory arguments firstname and lastname.
 
 Also one of either date_of_birth and date_of_death must be given.
 
-There are foud optional arguments: middlename, country, ua and host.
+There are four optional arguments: middlename, country, ua and host.
 
 host is the domain of the site to search, the default is www.findagrave.com.
 
