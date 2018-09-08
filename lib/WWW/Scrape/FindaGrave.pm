@@ -79,9 +79,9 @@ sub new {
 	}
 
 
-	die "First name is not optional" unless($args{'firstname'});
-	die "Last name is not optional" unless($args{'lastname'});
-	die "You must give one of the date of birth or death"
+	die 'First name is not optional' unless($args{'firstname'});
+	die 'Last name is not optional' unless($args{'lastname'});
+	die 'You must give one of the date of birth or death'
 		unless($args{'date_of_death'} || $args{'date_of_birth'});
 
 	my $ua = delete $args{ua} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
