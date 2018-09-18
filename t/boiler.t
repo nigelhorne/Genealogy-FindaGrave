@@ -51,5 +51,5 @@ TODO: {
 		"placeholder date/time" => qr(Date/time)
 	);
 
-	module_boilerplate_ok('lib/WWW/Scrape/FindaGrave.pm');
+	module_boilerplate_ok('lib/Genealogy/FindaGrave.pm');
 }

@@ -16,7 +16,7 @@ if($@) {
 } else {
 	my $tps = Test::Pod::Snippets->new;
 
-	my @modules = qw/ WWW::Scrape::FindaGrave /;
+	my @modules = qw/ Genealogy::FindaGrave /;
 
 	$tps->runtest( module => $_, testgroup => 1 ) for @modules;
 }

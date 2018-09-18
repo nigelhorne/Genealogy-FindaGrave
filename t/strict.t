@@ -14,5 +14,5 @@ if($@) {
 	plan(skip_all => 'Test::Strict required for testing use strict');
 } else {
 	all_perl_files_ok();
-	warnings_ok('lib/WWW/Scrape/FindaGrave.pm');
+	warnings_ok('lib/Genealogy/FindaGrave.pm');
 }

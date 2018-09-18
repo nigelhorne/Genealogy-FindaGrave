@@ -3,7 +3,7 @@
 use strict;
 
 use Test::Most;
-use WWW::Scrape::FindaGrave;
+use Genealogy::FindaGrave;
 
 NEW: {
 	if(-e 't/online.enabled') {
@@ -15,7 +15,7 @@ NEW: {
 			'date_of_birth' => 1912
 		};
 
-		isa_ok(WWW::Scrape::FindaGrave->new($args), 'WWW::Scrape::FindaGrave', 'Creating WWW::Scrape::FindaGrave object');
+		isa_ok(Genealogy::FindaGrave->new($args), 'Genealogy::FindaGrave', 'Creating Genealogy::FindaGrave object');
 	} else {
 		plan skip_all => 'On-line tests disabled';
 	}

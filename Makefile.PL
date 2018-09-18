@@ -25,15 +25,15 @@ if($online_tests) {
 	close($enabled) || die "Can't touch t/online.enabled $!";
 } else {
 	unlink('t/online.enabled');
-	print STDERR "NA: WWW::Scrape::FindaGrave needs a permanent connexion to the Internet\n";
+	print STDERR "NA: Genealogy::FindaGrave needs a permanent connexion to the Internet\n";
 	exit(0);
 }
 
 WriteMakefile(
-    NAME		=> 'WWW::Scrape::FindaGrave',
+    NAME		=> 'Genealogy::FindaGrave',
     AUTHOR		=> q{Nigel Horne <njh@bandsman.co.uk>},
-    VERSION_FROM	=> 'lib/WWW/Scrape/FindaGrave.pm',
-    ABSTRACT_FROM       => 'lib/WWW/Scrape/FindaGrave.pm',
+    VERSION_FROM	=> 'lib/Genealogy/FindaGrave.pm',
+    ABSTRACT_FROM       => 'lib/Genealogy/FindaGrave.pm',
     ((defined($ExtUtils::MakeMaker::VERSION) &&
      ($ExtUtils::MakeMaker::VERSION >= 6.3002))
       ? ('LICENSE'=> 'GPL')
@@ -52,15 +52,21 @@ WriteMakefile(
 	'LWP::Protocol::https' => 0,
     },
     dist		=> { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-    clean		=> { FILES => 'WWW-Scrape-FindaGrave-*' },
+    clean		=> { FILES => 'Genealogy-FindaGrave-*' },
     META_MERGE		=> {
     	'meta-spec' => { version => 2 },
     	resources => {
     		repository => {
 			type => 'git',
-			url => 'git://github.com/nigelhorne/WWW-Scrape-FindaGrave.git',
-			web => 'https://github.com/nigelhorne/WWW-Scrape-FindaGrave',
+			url => 'git://github.com/nigelhorne/Genealogy-FindaGrave.git',
+			web => 'https://github.com/nigelhorne/Genealogy-FindaGrave',
     		},
+		bugtracker => {
+			# web => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Genealogy-FindaGrave',
+			# mailto => 'bug-Genealogy-FindaGrave@rt.cpan.org'
+			web => 'https://github.com/nigelhorne/Genealogy-FindaGrave/issues',
+			url => 'https://github.com/nigelhorne/Genealogy-FindaGrave/issues',
+		}
 	},
     },
     MIN_PERL_VERSION	=> '5.6.2'	# Probably would work, but never tested on earlier versions than this
