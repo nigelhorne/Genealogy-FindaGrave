@@ -31,12 +31,12 @@ our $VERSION = '0.06';
     use Genealogy::FindaGrave;
 
     HTTP::Cache::Transparent::init({
-	BasePath => '/var/cache/findagrave'
+	BasePath => '/var/cache/loc'
     });
-    my $f = Genealogy::FindaGrave->new({
+    my $f = Genealogy::ChroniclingAmerica->new({
 	firstname => 'John',
 	lastname => 'Smith',
-	country => 'England',
+	state => 'Maryland',
 	date_of_death => 1862
     });
 
@@ -227,7 +227,7 @@ Nigel Horne, C<< <njh at bandsman.co.uk> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-genealogy-finragrave at rt.cpan.org>,
+Please report any bugs or feature requests to C<bug-genealogy-findagrave at rt.cpan.org>,
 or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Genealogy-FindaGrave>.
 I will be notified, and then you'll
