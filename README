@@ -1,4 +1,4 @@
-WWW-Scrape-FindaGrave 0.06
+Genealogy-FindaGrave 0.06
 
 INSTALLATION
 
@@ -14,21 +14,21 @@ SUPPORT AND DOCUMENTATION
 After installing, you can find documentation for this module with the
 perldoc command.
 
-    perldoc WWW::Scrape::FindaGrave
+    perldoc Genealogy::FindaGrave
 
 You can also look for information at:
 
     RT, CPAN's request tracker
-        http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scrape-FindaGrave
+        http://rt.cpan.org/NoAuth/Bugs.html?Dist=Genealogy-FindaGrave
 
     AnnoCPAN, Annotated CPAN documentation
-        http://annocpan.org/dist/WWW-Scrape-FindaGrave
+        http://annocpan.org/dist/Genealogy-FindaGrave
 
     CPAN Ratings
-        http://cpanratings.perl.org/d/WWW-Scrape-FindaGrave
+        http://cpanratings.perl.org/d/Genealogy-FindaGrave
 
     Search CPAN
-        http://search.cpan.org/dist/WWW-Scrape-FindaGrave/
+        http://search.cpan.org/dist/Genealogy-FindaGrave/
 
 When filing a bug, please include a patch or pull request.
 

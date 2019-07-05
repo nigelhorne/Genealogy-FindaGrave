@@ -1,4 +1,4 @@
-package WWW::Scrape::FindaGrave;
+package Genealogy::FindaGrave;
 
 use warnings;
 use strict;
@@ -15,7 +15,7 @@ use Carp;
 
 =head1 NAME
 
-WWW::Scrape::FindaGrave - Find URLs on FindaGrave for a person
+Genealogy::FindaGrave - Find URLs on FindaGrave for a person
 
 =head1 VERSION
 
@@ -28,15 +28,15 @@ our $VERSION = '0.06';
 =head1 SYNOPSIS
 
     use HTTP::Cache::Transparent;  # be nice
-    use WWW::Scrape::FindaGrave;
+    use Genealogy::FindaGrave;
 
     HTTP::Cache::Transparent::init({
-	BasePath => '/var/cache/findagrave'
+	BasePath => '/var/cache/loc'
     });
-    my $f = WWW::Scrape::FindaGrave->new({
+    my $f = Genealogy::ChroniclingAmerica->new({
 	firstname => 'John',
 	lastname => 'Smith',
-	country => 'England',
+	state => 'Maryland',
 	date_of_death => 1862
     });
 
@@ -49,7 +49,7 @@ our $VERSION = '0.06';
 
 =head2 new
 
-Creates a WWW::Scrape::FindaGrave object.
+Creates a Genealogy::FindaGrave object.
 
 It takes two mandatory arguments firstname and lastname.
 
@@ -227,9 +227,9 @@ Nigel Horne, C<< <njh at bandsman.co.uk> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-www-scrape-findagrave at rt.cpan.org>,
+Please report any bugs or feature requests to C<bug-genealogy-findagrave at rt.cpan.org>,
 or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scrape-FindaGrave>.
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Genealogy-FindaGrave>.
 I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
@@ -242,7 +242,7 @@ L<https://www.findagrave.com>
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::Scrape::FindaGrave
+    perldoc Genealogy::FindaGrave
 
 You can also look for information at:
 
@@ -250,19 +250,19 @@ You can also look for information at:
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scrape-FindaGrave>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Genealogy-FindaGrave>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/WWW-Scrape-FindaGrave>
+L<http://annocpan.org/dist/Genealogy-FindaGrave>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/WWW-Scrape-FindaGrave>
+L<http://cpanratings.perl.org/d/Genealogy-FindaGrave>
 
 =item * Search CPAN
 
-L<https://metacpan.org/release/WWW-Scrape-FindaGrave>
+L<https://metacpan.org/release/Genealogy-FindaGrave>
 
 =back
 
@@ -274,4 +274,4 @@ This program is released under the following licence: GPL2
 
 =cut
 
-1; # End of WWW::Scrape::FindaGrave
+1; # End of Genealogy::FindaGrave

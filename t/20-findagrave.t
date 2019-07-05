@@ -11,15 +11,15 @@ FINDAGRAVE: {
 	} else {
 		plan tests => 15;
 
-		use_ok('WWW::Scrape::FindaGrave');
-		my $f = WWW::Scrape::FindaGrave->new({
+		use_ok('Genealogy::FindaGrave');
+		my $f = Genealogy::FindaGrave->new({
 			firstname => 'Daniel',
 			lastname => 'Culmer',
 			country => 'England',
 			date_of_death => 1862
 		});
 		ok(defined $f);
-		ok($f->isa('WWW::Scrape::FindaGrave'));
+		ok($f->isa('Genealogy::FindaGrave'));
 
 		my $count = 0;
 		while(my $link = $f->get_next_entry()) {
@@ -30,7 +30,7 @@ FINDAGRAVE: {
 		ok(!defined($f->get_next_entry()));
 		ok($count > 0);
 
-		$f = WWW::Scrape::FindaGrave->new({
+		$f = Genealogy::FindaGrave->new({
 			firstname => 'xyzzy',
 			lastname => 'plugh',
 			country => 'Canada',
@@ -38,10 +38,10 @@ FINDAGRAVE: {
 		});
 
 		ok(defined $f);
-		ok($f->isa('WWW::Scrape::FindaGrave'));
+		ok($f->isa('Genealogy::FindaGrave'));
 		ok(!defined($f->get_next_entry()));
 
-		$f = WWW::Scrape::FindaGrave->new({
+		$f = Genealogy::FindaGrave->new({
 			firstname => 'Daniel',
 			middlename => 'John',
 			lastname => 'Culmer',
@@ -49,17 +49,17 @@ FINDAGRAVE: {
 			date_of_death => 1862
 		});
 		ok(defined $f);
-		ok($f->isa('WWW::Scrape::FindaGrave'));
+		ok($f->isa('Genealogy::FindaGrave'));
 		ok(!defined($f->get_next_entry()));
 
-		$f = WWW::Scrape::FindaGrave->new(
+		$f = Genealogy::FindaGrave->new(
 			firstname => 'Daniel',
 			lastname => 'Culmer',
 			country => 'United States',
 			date_of_death => 1862
 		);
 		ok(defined $f);
-		ok($f->isa('WWW::Scrape::FindaGrave'));
+		ok($f->isa('Genealogy::FindaGrave'));
 		ok(!defined($f->get_next_entry()));
 	}
 }

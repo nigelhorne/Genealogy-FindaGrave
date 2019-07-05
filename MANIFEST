@@ -1,6 +1,6 @@
 Changes
 ignore.txt
-lib/WWW/Scrape/FindaGrave.pm
+lib/Genealogy/FindaGrave.pm
 LICENCE
 Makefile.PL
 MANIFEST
@@ -23,6 +23,7 @@ t/metrics.t
 t/no404.t
 t/noopentickets.t
 t/noplan.t
+t/online.enabled
 t/pod-cm.t
 t/pod.t
 t/port.t
