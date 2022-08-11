@@ -1,7 +1,9 @@
 [![Linux Build Status](https://travis-ci.org/nigelhorne/WWW-Scrape-FindaGrave.svg?branch=master)](https://travis-ci.org/nigelhorne/WWW-Scrape-FindaGrave)
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/ra6839k5wpno9xf0?svg=true)](https://ci.appveyor.com/project/nigelhorne/www-scrape-findagrave)
 [![Coverage Status](https://coveralls.io/repos/github/nigelhorne/WWW-Scrape-FindaGrave/badge.svg?branch=master)](https://coveralls.io/github/nigelhorne/WWW-Scrape-FindaGrave?branch=master)
+<!---
 [![Dependency Status](https://dependencyci.com/github/nigelhorne/WWW-Scrape-FindaGrave/badge)](https://dependencyci.com/github/nigelhorne/WWW-Scrape-FindaGrave)
+-->
 
 # NAME
 
