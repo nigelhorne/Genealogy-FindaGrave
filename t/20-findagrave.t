@@ -9,7 +9,7 @@ FINDAGRAVE: {
 	unless(-e 't/online.enabled') {
 		plan skip_all => 'On-line tests disabled';
 	} else {
-		plan tests => 15;
+		plan tests => 14;
 
 		use_ok('Genealogy::FindaGrave');
 		my $f = Genealogy::FindaGrave->new({
