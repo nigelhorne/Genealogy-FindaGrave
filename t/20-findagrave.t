@@ -9,7 +9,7 @@ FINDAGRAVE: {
 	unless(-e 't/online.enabled') {
 		plan skip_all => 'On-line tests disabled';
 	} else {
-		plan tests => 14;
+		plan tests => 15;
 
 		use_ok('Genealogy::FindaGrave');
 		my $f = Genealogy::FindaGrave->new({
@@ -23,12 +23,12 @@ FINDAGRAVE: {
 
 		my $count = 0;
 		while(my $link = $f->get_next_entry()) {
-			diag($link);
+			diag($link) if($ENV{'TEST_VERBOSE'});
 			uri_host_ok($link, 'www.findagrave.com');
 			$count++;
 		}
 		ok(!defined($f->get_next_entry()));
-		ok($count > 0);
+		cmp_ok($count, '>', 0, 'Found at least one entry');
 
 		$f = Genealogy::FindaGrave->new({
 			firstname => 'xyzzy',
