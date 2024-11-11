@@ -33,7 +33,7 @@ jobs:
       - run: perl -V
       - name: Install Dependencies
         run: |
-          cpanm -iqn ExtUtils::MakeMaker Test::Most LWP::UserAgent
+          cpanm -iqn ExtUtils::MakeMaker Test::Most LWP::UserAgent HTML::SimpleLinkExtor
           cpanm -iqn --skip-satisfied --installdeps --notest
       - name: Make Module
         run: |
