@@ -1,4 +1,4 @@
-Genealogy-FindaGrave 0.06
+Genealogy-FindaGrave 0.07
 
 INSTALLATION
 
@@ -23,9 +23,6 @@ You can also look for information at:
 
     AnnoCPAN, Annotated CPAN documentation
         http://annocpan.org/dist/Genealogy-FindaGrave
-
-    CPAN Ratings
-        http://cpanratings.perl.org/d/Genealogy-FindaGrave
 
     Search CPAN
         http://search.cpan.org/dist/Genealogy-FindaGrave/

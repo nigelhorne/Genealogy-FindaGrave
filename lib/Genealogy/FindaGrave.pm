@@ -20,11 +20,11 @@ Genealogy::FindaGrave - Find URLs on FindaGrave for a person
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 =head1 SYNOPSIS
 
@@ -70,29 +70,27 @@ sub new {
 	# Handle hash or hashref arguments
 	my %args = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
 
-	if(!defined($class)) {
-		# Using CGI::Info->new(), not CGI::Info::new()
-		# carp(__PACKAGE__, ' use ->new() not ::new() to instantiate');
-		# return;
-
-		# FIXME: this only works when no arguments are given
-		$class = __PACKAGE__;
-	} elsif(Scalar::Util::blessed($class)) {
-		# If $class is an object, clone it with new arguments
-		return bless { %{$class}, %args }, ref($class);
+	# Ensure the correct instantiation method is used
+	unless(defined $class) {
+		carp(__PACKAGE__, ' Use ->new() not ::new() to instantiate');
+		return;
 	}
+
+	# If $class is an object, clone it with new arguments
+	return bless { %{$class}, %args }, ref($class) if(Scalar::Util::blessed($class));
 
 	die 'First name is not optional' unless($args{'firstname'});
 	die 'Last name is not optional' unless($args{'lastname'});
 	die 'You must give one of the date of birth or death'
 		unless($args{'date_of_death'} || $args{'date_of_birth'});
 
-	my $ua = delete $args{ua} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
+	# Set up user agent (ua) if not provided
+	my $ua = $args{'ua'} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
+	# $ua->default_header(accept_encoding => 'gzip,deflate');	# TODO - add unzip/inflation
 	$ua->env_proxy(1);
 
-	# if(!defined($param{'host'})) {
-		# $ua->ssl_opts(verify_hostname => 0);	# Yuck
-	# }
+	# Disable SSL verification if the host is not defined (not recommended in production)
+	# $ua->ssl_opts(verify_hostname => 0) unless defined $args{'host'};
 
 	my $rc = {
 		ua => $ua,
@@ -105,17 +103,17 @@ sub new {
 		matches => 0,
 		index => 0,
 	};
+
+	# Set host, defaulting to 'www.findagrave.com'
 	$rc->{'host'} = $args{'host'} || 'www.findagrave.com';
 
-	my %query_parameters;
-	if($args{'firstname'}) {
-		$query_parameters{'firstname'} = $args{'firstname'};
-	}
+	my %query_parameters = (
+		'firstname' => $args{'firstname'},
+		'lastname' => $args{'lastname'}
+	);
+
 	if($args{'middlename'}) {
 		$query_parameters{'middlename'} = $args{'middlename'};
-	}
-	if($args{'lastname'}) {
-		$query_parameters{'lastname'} = $args{'lastname'};
 	}
 	if($args{'date_of_birth'}) {
 		$query_parameters{'birthyear'} = $args{'date_of_birth'};

@@ -7,24 +7,24 @@
 
 # NAME
 
-WWW::Scrape::FindaGrave - Find people on FindaGrave
+Genealogy::FindaGrave - Find URLs on FindaGrave for a person
 
 # VERSION
 
-Version 0.06
+Version 0.07
 
 # SYNOPSIS
 
     use HTTP::Cache::Transparent;  # be nice
-    use WWW::Scrape::FindaGrave;
+    use Genealogy::FindaGrave;
 
     HTTP::Cache::Transparent::init({
-        BasePath => '/var/cache/findagrave'
+        BasePath => '/var/cache/loc'
     });
-    my $f = WWW::Scrape::FindaGrave->new({
+    my $f = Genealogy::ChroniclingAmerica->new({
         firstname => 'John',
         lastname => 'Smith',
-        country => 'England',
+        state => 'Maryland',
         date_of_death => 1862
     });
 
@@ -37,18 +37,18 @@ Version 0.06
 
 ## new
 
-Creates a WWW::Scrape::FindaGrave object.
+Creates a Genealogy::FindaGrave object.
 
 It takes two mandatory arguments firstname and lastname.
 
 Also one of either date\_of\_birth and date\_of\_death must be given.
 
-There are foud optional arguments: middlename, country, ua and host.
+There are four optional arguments: middlename, country, ua and host.
 
 host is the domain of the site to search, the default is www.findagrave.com.
 
 ua is a pointer to an object that understands get and env\_proxy messages, such
-as [LWP::UserAgent::Throttled](https://metacpan.org/pod/LWP::UserAgent::Throttled).
+as [LWP::UserAgent::Throttled](https://metacpan.org/pod/LWP%3A%3AUserAgent%3A%3AThrottled).
 
 ## get\_next\_entry
 
@@ -60,9 +60,9 @@ Nigel Horne, `<njh at bandsman.co.uk>`
 
 # BUGS
 
-Please report any bugs or feature requests to `bug-www-scrape-findagrave at rt.cpan.org`,
+Please report any bugs or feature requests to `bug-genealogy-findagrave at rt.cpan.org`,
 or through the web interface at
-[http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scrape-FindaGrave](http://rt.cpan.org/NoAuth/ReportBug.html?Queue=WWW-Scrape-FindaGrave).
+[http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Genealogy-FindaGrave](http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Genealogy-FindaGrave).
 I will be notified, and then you'll
 automatically be notified of progress on your bug as I make changes.
 
@@ -75,28 +75,24 @@ automatically be notified of progress on your bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc WWW::Scrape::FindaGrave
+    perldoc Genealogy::FindaGrave
 
 You can also look for information at:
 
 - RT: CPAN's request tracker
 
-    [http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scrape-FindaGrave](http://rt.cpan.org/NoAuth/Bugs.html?Dist=WWW-Scrape-FindaGrave)
+    [http://rt.cpan.org/NoAuth/Bugs.html?Dist=Genealogy-FindaGrave](http://rt.cpan.org/NoAuth/Bugs.html?Dist=Genealogy-FindaGrave)
 
 - AnnoCPAN: Annotated CPAN documentation
 
-    [http://annocpan.org/dist/WWW-Scrape-FindaGrave](http://annocpan.org/dist/WWW-Scrape-FindaGrave)
-
-- CPAN Ratings
-
-    [http://cpanratings.perl.org/d/WWW-Scrape-FindaGrave](http://cpanratings.perl.org/d/WWW-Scrape-FindaGrave)
+    [http://annocpan.org/dist/Genealogy-FindaGrave](http://annocpan.org/dist/Genealogy-FindaGrave)
 
 - Search CPAN
 
-    [https://metacpan.org/release/WWW-Scrape-FindaGrave](https://metacpan.org/release/WWW-Scrape-FindaGrave)
+    [https://metacpan.org/release/Genealogy-FindaGrave](https://metacpan.org/release/Genealogy-FindaGrave)
 
 # LICENSE AND COPYRIGHT
 
-Copyright 2016-2018 Nigel Horne.
+Copyright 2016-2024 Nigel Horne.
 
 This program is released under the following licence: GPL2
