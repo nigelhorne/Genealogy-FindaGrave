@@ -11,7 +11,7 @@ on:
       - '*'
   pull_request:
   schedule:
-    - cron: '13 24 28 * *'
+    - cron: '13 22 28 * *'
 jobs:
   build:
     runs-on: ${{ matrix.os }}
