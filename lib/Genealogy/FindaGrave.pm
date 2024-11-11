@@ -78,7 +78,6 @@ sub new {
 		%args = @_;
 	}
 
-
 	die 'First name is not optional' unless($args{'firstname'});
 	die 'Last name is not optional' unless($args{'lastname'});
 	die 'You must give one of the date of birth or death'
@@ -257,10 +256,6 @@ L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Genealogy-FindaGrave>
 
 L<http://annocpan.org/dist/Genealogy-FindaGrave>
 
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/Genealogy-FindaGrave>
-
 =item * Search CPAN
 
 L<https://metacpan.org/release/Genealogy-FindaGrave>
@@ -269,7 +264,7 @@ L<https://metacpan.org/release/Genealogy-FindaGrave>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016-2018 Nigel Horne.
+Copyright 2016-2024 Nigel Horne.
 
 This program is released under the following licence: GPL2
 

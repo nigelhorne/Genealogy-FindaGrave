@@ -8,7 +8,7 @@ use IO::Socket::INET;
 
 my $online_tests;
 
-if($ENV{RELEASE_TESTING}) {
+if($ENV{'AUTHOR_TESTING'}) {
 	$online_tests = are_online();
 } elsif($ENV{AUTOMATED_TESTING} || $ENV{NO_NETWORK_TESTING}) {
 	$online_tests = 0;
@@ -29,6 +29,15 @@ if($online_tests) {
 	exit(0);
 }
 
+my $dist = {
+	COMPRESS => 'gzip -9f',
+	SUFFIX => 'gz'
+};
+
+if($^O eq 'darwin') {
+	$dist->{'TAR'} = 'gtar';
+}
+
 WriteMakefile(
     NAME		=> 'Genealogy::FindaGrave',
     AUTHOR		=> q{Nigel Horne <njh@bandsman.co.uk>},
@@ -41,18 +50,18 @@ WriteMakefile(
     PL_FILES	=> {},
     TEST_REQUIRES => {
 	'Test::DescribeMe' => 0,
+	'Test::DescribeMe' => 0,
 	'Test::Most' => 0,
+	'Test::Needs' => 0,
 	'Test::NoWarnings' => 0,
 	'Test::URI' => 0,
 	# 'Test::Kwalitee' => 0,
-    },
-    PREREQ_PM => {
+    }, PREREQ_PM => {
     	'Carp' => 0,
 	'LWP::UserAgent' => 0,
 	'HTML::SimpleLinkExtor' => 0,
 	'LWP::Protocol::https' => 0,
-    },
-    dist		=> { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+    }, dist => $dist,
     clean		=> { FILES => 'Genealogy-FindaGrave-*' },
     META_MERGE		=> {
     	'meta-spec' => { version => 2 },
@@ -75,6 +84,8 @@ WriteMakefile(
 
 sub are_online
 {
+	return 0 if($ENV{'NO_NETWORK_TESTING'} || $ENV{'CIRCLECI'} || $ENV{'TRAVIS_PERL_VERSION'} || $ENV{'AUTOMATED_TESTING'} || $ENV{'NONINTERACTIVE_TESTING'} || (!-t STDIN));
+
 	my $host = 'www.findagrave.com:80';
 
 	if($ENV{'http_proxy'} && ($ENV{'http_proxy'} =~ /^.+\/\/(\w+:\d+)$/)) {
@@ -82,13 +93,12 @@ sub are_online
 	} elsif($ENV{'HTTP_PROXY'} && ($ENV{'HTTP_PROXY'} =~ /^.+\/\/(\w+:\d+)$/)) {
 		$host = $1;
 	}
-	my $s = IO::Socket::INET->new(
+	if(my $s = IO::Socket::INET->new(
 		# PeerAddr => 'www.ripe.net:43',
 		# PeerAddr => 'whois.apnic.net:43',
 		PeerAddr => $host,
 		Timeout => 5
-	);
-	if($s) {
+	)) {
 		print <<EOF;
 
 You appear to be directly connected to the Internet.  I have some tests

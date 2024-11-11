@@ -3,6 +3,9 @@ Revision history for Genealogy::FindaGrave
 0.07
 	Renamed from WWW::Scrape::FindaGrave
 	Updated for latest website
+	Support for GitHub Actions
+	Use Test::DescribeMe to simplify tests
+	Use Test::Needs
 
 0.06	Tue Aug 28 10:16:33 EDT 2018
 	Fix undefined variable usage
