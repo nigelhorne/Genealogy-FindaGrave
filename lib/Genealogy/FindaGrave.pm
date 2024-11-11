@@ -170,39 +170,97 @@ Returns the next match as a URL to the Find-A-Grave page.
 
 =cut
 
+# sub get_next_entry
+# {
+	# my $self = shift;
+# 
+	# return if(!defined($self->{'matches'}));
+	# return if($self->{'matches'} == 0);
+# 
+	# my $rc = pop @{$self->{'results'}};
+	# return $rc if $rc;
+# 
+	# return if($self->{'index'} >= $self->{'matches'});
+# 
+	# my $firstname = $self->{'firstname'};
+	# my $lastname = $self->{'lastname'};
+# 
+	# my $base = $self->{'resp'}->base();
+	# my $e = HTML::SimpleLinkExtor->new($base);
+# 
+	# $e->remove_tags('img', 'script');
+	# $e->parse($self->{'resp'}->content());	# FIXME: having to parse every time
+# 
+	# foreach my $link ($e->links()) {
+		# my $match = 0;
+		# if($link =~ /\/memorial\/\d+\/\Q$firstname\E.+\Q$lastname\E/i) {
+			# $match = 1;
+		# }
+		# if($match) {
+			# push @{$self->{'results'}}, $link;
+		# }
+	# }
+	# $self->{'index'}++;
+	# if($self->{'index'} <= $self->{'matches'}) {
+		# $self->{'page'}++;
+		# $self->{'query_parameters'}->{'page'} = $self->{'page'};
+# 
+		# my $uri = URI->new("https://$self->{host}/memorial/search");
+		# $uri->query_form(%{$self->{'query_parameters'}});
+		# my $url = $uri->as_string();
+# 
+		# my $resp = $self->{'ua'}->get($url);
+		# $self->{'resp'} = $resp;
+# 
+		# if($resp->is_error()) {
+			# Carp::carp("API returned error: on $url ", $resp->status_line());
+			# return { };
+		# }
+# 
+		# unless($resp->is_success()) {
+			# die $resp->status_line();
+		# }
+	# }
+# 
+	# return pop @{$self->{'results'}};
+# }
+
 sub get_next_entry
 {
 	my $self = shift;
 
-	return if(!defined($self->{'matches'}));
-	return if($self->{'matches'} == 0);
+	# Return immediately if no matches or results are left
+	return if !defined $self->{'matches'} || $self->{'matches'} == 0;
 
-	my $rc = pop @{$self->{'results'}};
-	return $rc if $rc;
+	# Return an existing result if available
+	if(my $rc = pop @{$self->{'results'}}) {
+		return $rc;
+	}
 
-	return if($self->{'index'} >= $self->{'matches'});
+	# Return if all available entries have been processed
+	return if $self->{'index'} >= $self->{'matches'};
 
-	my $firstname = $self->{'firstname'};
-	my $lastname = $self->{'lastname'};
-	# my $date_of_death = $self->{'date_of_death'};	# FIXME: check results against this
-	# my $date_of_birth = $self->{'date_of_birth'};	# FIXME: check results against this
+	# Parse content only if new response is obtained
+	unless(exists $self->{'parsed_content'}) {
+		my $base = $self->{'resp'}->base();
+		my $e = HTML::SimpleLinkExtor->new($base);
 
-	my $base = $self->{'resp'}->base();
-	my $e = HTML::SimpleLinkExtor->new($base);
+		$e->remove_tags('img', 'script');
+		$e->parse($self->{'resp'}->content());
+		$self->{'parsed_content'} = [$e->links()];
+	}
 
-	$e->remove_tags('img', 'script');
-	$e->parse($self->{'resp'}->content());	# FIXME: having to parse every time
-
-	foreach my $link ($e->links()) {
-		my $match = 0;
-		if($link =~ /\/memorial\/\d+\/\Q$firstname\E.+\Q$lastname\E/i) {
-			$match = 1;
-		}
-		if($match) {
+	# Search for matching links
+	foreach my $link(@{$self->{'parsed_content'}}) {
+		# my $date_of_death = $self->{'date_of_death'};	# FIXME: check results against this
+		# my $date_of_birth = $self->{'date_of_birth'};	# FIXME: check results against this
+		if($link =~ /\/memorial\/\d+\/\Q$self->{'firstname'}\E.+\Q$self->{'lastname'}\E/i) {
 			push @{$self->{'results'}}, $link;
 		}
 	}
 	$self->{'index'}++;
+
+	# Fetch new page if needed
 	if($self->{'index'} <= $self->{'matches'}) {
 		$self->{'page'}++;
 		$self->{'query_parameters'}->{'page'} = $self->{'page'};
@@ -215,17 +273,19 @@ sub get_next_entry
 		$self->{'resp'} = $resp;
 
 		if($resp->is_error()) {
-			Carp::carp("API returned error: on $url ", $resp->status_line());
-			return { };
+			Carp::carp("API returned error on $url: ", $resp->status_line());
+			return {};
 		}
 
-		unless($resp->is_success()) {
-			die $resp->status_line();
-		}
+		die $resp->status_line() unless $resp->is_success();
+
+		# Reset parsed content to re-parse on next call
+		delete $self->{'parsed_content'};
 	}
 
 	return pop @{$self->{'results'}};
 }
+
 
 =head1 AUTHOR
 
