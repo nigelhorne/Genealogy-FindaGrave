@@ -6,6 +6,7 @@ use LWP::UserAgent;
 use HTML::SimpleLinkExtor;
 use LWP::Protocol::https;
 use Carp;
+use Scalar::Util;
 
 # Request:
 # https://www.findagrave.com/memorial/search?firstname=Edmund&middlename=Frank&lastname=Horne&birthyear=&birthyearfilter=&deathyear=&deathyearfilter=&location=&locationId=&memorialid=&datefilter=&orderby=
@@ -64,18 +65,21 @@ as L<LWP::UserAgent::Throttled>.
 =cut
 
 sub new {
-	my $proto = shift;
-	my $class = ref($proto) || $proto;
+	my $class = shift;
 
-	return unless(defined($class));
+	# Handle hash or hashref arguments
+	my %args = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
 
-	my %args;
-	if(ref($_[0]) eq 'HASH') {
-		%args = %{$_[0]};
-	} elsif(ref($_[0])) {
-		Carp::croak("Usage: __PACKAGE__->new(%args)");
-	} elsif(@_ % 2 == 0) {
-		%args = @_;
+	if(!defined($class)) {
+		# Using CGI::Info->new(), not CGI::Info::new()
+		# carp(__PACKAGE__, ' use ->new() not ::new() to instantiate');
+		# return;
+
+		# FIXME: this only works when no arguments are given
+		$class = __PACKAGE__;
+	} elsif(Scalar::Util::blessed($class)) {
+		# If $class is an object, clone it with new arguments
+		return bless { %{$class}, %args }, ref($class);
 	}
 
 	die 'First name is not optional' unless($args{'firstname'});
@@ -155,6 +159,8 @@ sub new {
 	} else {
 		$rc->{'matches'} = 0;
 	}
+
+	# Return the blessed object
 	return bless $rc, $class;
 }
 

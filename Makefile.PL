@@ -64,6 +64,7 @@ WriteMakefile(
 	'LWP::UserAgent' => 0,
 	'HTML::SimpleLinkExtor' => 0,
 	'LWP::Protocol::https' => 0,
+	'Scalar::Util' => 0
     }, dist => $dist,
     clean		=> { FILES => 'Genealogy-FindaGrave-*' },
     META_MERGE		=> {
