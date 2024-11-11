@@ -26,10 +26,10 @@ t/noopentickets.t
 t/noplan.t
 t/online.enabled
 t/pod-cm.t
+t/pod-snippets.t
 t/pod.t
 t/port.t
 t/prereq.t
-t/snippets.t
 t/spelling.t
 t/strict.t
 t/unused.t
