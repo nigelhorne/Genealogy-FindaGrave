@@ -2,21 +2,22 @@
 
 use strict;
 use warnings;
-use Getopt::Long;	# Technique inspired by IO::Lambda
 use ExtUtils::MakeMaker 6.64;	# 6.64 for TEST_REQUIRES
+use Getopt::Long;	# Technique inspired by IO::Lambda
 use IO::Socket::INET;
 
 my $online_tests;
 
 if($ENV{'AUTHOR_TESTING'}) {
 	$online_tests = are_online();
-} elsif($ENV{AUTOMATED_TESTING} || $ENV{NO_NETWORK_TESTING}) {
-	$online_tests = 0;
 } else {
 	Getopt::Long::GetOptions('online-tests!' => \$online_tests);
 
 	if(!defined($online_tests)) {
 		$online_tests = are_online();
+	}
+	if(!$online_tests) {
+		print "On-line tests have been disabled\n";
 	}
 }
 
@@ -25,8 +26,11 @@ if($online_tests) {
 	close($enabled) || die "Can't touch t/online.enabled $!";
 } else {
 	unlink('t/online.enabled');
-	print STDERR "NA: Genealogy::FindaGrave needs a permanent connexion to the Internet\n";
-	exit(0);
+	# Allow cheating for some tests
+	unless(defined($ENV{'GITHUB_ACTION'}) || defined($ENV{'CIRCLECI'}) || defined($ENV{'TRAVIS_PERL_VERSION'}) || defined($ENV{'APPVEYOR'})) {
+		print STDERR "NA: Genealogy::FindaGrave needs a permanent connexion to the Internet\n";
+		exit(0);
+	}
 }
 
 my $dist = {
