@@ -87,7 +87,7 @@ sub new {
 	# Set up user agent (ua) if not provided
 	my $ua = $args{'ua'} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
 	# $ua->default_header(accept_encoding => 'gzip,deflate');	# TODO - add unzip/inflation
-	$ua->env_proxy(1);
+	$ua->env_proxy(1) unless($args{'ua'});
 
 	# Disable SSL verification if the host is not defined (not recommended in production)
 	# $ua->ssl_opts(verify_hostname => 0) unless defined $args{'host'};

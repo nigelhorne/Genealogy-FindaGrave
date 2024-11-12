@@ -1,5 +1,8 @@
 Revision history for Genealogy::FindaGrave
 
+0.08
+	Connect to squid port when proxy is set
+
 0.07	Mon Nov 11 07:59:23 EST 2024
 	Renamed from WWW::Scrape::FindaGrave
 	Updated for latest website
