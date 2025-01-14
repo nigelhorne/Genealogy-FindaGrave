@@ -13,6 +13,7 @@ subtest 'Constructor tests' => sub {
 		lastname => 'Horne',
 		date_of_death => 1945,
 	});
+
 	ok($obj, 'Object created successfully');
 	isa_ok($obj, 'Genealogy::FindaGrave', 'Object is of correct class');
 
@@ -24,6 +25,14 @@ subtest 'Constructor tests' => sub {
 
 	dies_ok { Genealogy::FindaGrave->new({ firstname => 'Edmund', lastname => 'Horne' }) }
 		'Dies if both date_of_birth and date_of_death are missing';
+
+	dies_ok {
+		my $obj = Genealogy::FindaGrave->new({
+			firstname => 'InvalidName',
+			lastname => 'InvalidLastName',
+			date_of_death => 9999
+		})
+	} 'Dies if year in the future';
 };
 
 # Test fetching entries
@@ -46,7 +55,7 @@ subtest 'Invalid requests' => sub {
 	my $obj = Genealogy::FindaGrave->new({
 		firstname => 'InvalidName',
 		lastname => 'InvalidLastName',
-		date_of_death => 9999,
+		date_of_death => 2000
 	});
 
 	my $entry = $obj->get_next_entry();

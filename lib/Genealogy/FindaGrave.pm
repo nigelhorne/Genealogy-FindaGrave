@@ -55,6 +55,7 @@ Creates a Genealogy::FindaGrave object.
 It takes two mandatory arguments firstname and lastname.
 
 Also one of either date_of_birth and date_of_death must be given.
+FIXME: Note that this are years, and should have been called year_of_*.
 
 There are four optional arguments: middlename, country, ua and host.
 
@@ -88,6 +89,11 @@ sub new {
 	die 'Last name is not optional' unless($args{'lastname'});
 	die 'You must give one of the date of birth or death'
 		unless($args{'date_of_death'} || $args{'date_of_birth'});
+
+	# Check for clearly wrong dates
+	my $this_year = (localtime)[5] + 1900;
+	die 'Invalid birth date' if(defined($args{'date_of_birth'}) && ($args{'date_of_birth'} > $this_year));
+	die 'Invalid death date' if(defined($args{'date_of_death'}) && ($args{'date_of_death'} > $this_year));
 
 	# Set up user agent (ua) if not provided
 	my $ua = $args{'ua'} || LWP::UserAgent->new(agent => __PACKAGE__ . "/$VERSION");
