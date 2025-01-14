@@ -20,11 +20,11 @@ Genealogy::FindaGrave - Find URLs on FindaGrave for a person
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 =head1 SYNOPSIS
 
@@ -55,7 +55,7 @@ Creates a Genealogy::FindaGrave object.
 It takes two mandatory arguments firstname and lastname.
 
 Also one of either date_of_birth and date_of_death must be given.
-FIXME: Note that this are years, and should have been called year_of_*.
+FIXME: Note that these are years, and should have been called year_of_*.
 
 There are four optional arguments: middlename, country, ua and host.
 
@@ -339,7 +339,7 @@ L<https://metacpan.org/release/Genealogy-FindaGrave>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2016-2024 Nigel Horne.
+Copyright 2016-2025 Nigel Horne.
 
 This program is released under the following licence: GPL2
 

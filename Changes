@@ -1,6 +1,6 @@
 Revision history for Genealogy::FindaGrave
 
-0.08
+0.08	Tue Jan 14 14:34:36 EST 2025
 	Connect to squid port when proxy is set
 	Ensure new() fails properly when the API gives an error
 	new() now fails if a clearly invalid year is given
