@@ -70,14 +70,19 @@ sub new {
 	# Handle hash or hashref arguments
 	my %args = (ref($_[0]) eq 'HASH') ? %{$_[0]} : @_;
 
-	# Ensure the correct instantiation method is used
-	unless(defined $class) {
-		carp(__PACKAGE__, ' Use ->new() not ::new() to instantiate');
-		return;
-	}
+	if(!defined($class)) {
+		if((scalar keys %args) > 0) {
+			# Using Genealogy::FindaGrave:new(), not Genealogy::FindaGrave->new()
+			carp(__PACKAGE__, ' use ->new() not ::new() to instantiate');
+			return;
+		}
 
-	# If $class is an object, clone it with new arguments
-	return bless { %{$class}, %args }, ref($class) if(Scalar::Util::blessed($class));
+		# FIXME: this only works when no arguments are given
+		$class = __PACKAGE__;
+	} elsif(Scalar::Util::blessed($class)) {
+		# If $class is an object, clone it with new arguments
+		return bless { %{$class}, %args }, ref($class);
+	}
 
 	die 'First name is not optional' unless($args{'firstname'});
 	die 'Last name is not optional' unless($args{'lastname'});
