@@ -57,7 +57,7 @@ Returns the next match as a URL to the Find-A-Grave page.
 
 # AUTHOR
 
-Nigel Horne, `<njh at bandsman.co.uk>`
+Nigel Horne, `<njh at nigelhorne.com>`
 
 # BUGS
 
@@ -69,10 +69,12 @@ automatically be notified of progress on your bug as I make changes.
 
 # SEE ALSO
 
-[https://github.com/nigelhorne/gedcom](https://github.com/nigelhorne/gedcom)
-[https://www.findagrave.com](https://www.findagrave.com)
+- [https://github.com/nigelhorne/gedcom](https://github.com/nigelhorne/gedcom)
+- [https://www.findagrave.com](https://www.findagrave.com)
 
 # SUPPORT
+
+This module is provided as-is without any warranty.
 
 You can find documentation for this module with the perldoc command.
 

@@ -295,10 +295,9 @@ sub get_next_entry
 	return pop @{$self->{'results'}};
 }
 
-
 =head1 AUTHOR
 
-Nigel Horne, C<< <njh at bandsman.co.uk> >>
+Nigel Horne, C<< <njh at nigelhorne.com> >>
 
 =head1 BUGS
 
@@ -310,10 +309,17 @@ automatically be notified of progress on your bug as I make changes.
 
 =head1 SEE ALSO
 
-L<https://github.com/nigelhorne/gedcom>
-L<https://www.findagrave.com>
+=over 4
+
+=item * L<https://github.com/nigelhorne/gedcom>
+
+=item * L<https://www.findagrave.com>
+
+=back
 
 =head1 SUPPORT
+
+This module is provided as-is without any warranty.
 
 You can find documentation for this module with the perldoc command.
 
